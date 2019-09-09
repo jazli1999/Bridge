@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <ui:composition template="/template.xhtml">
+                <ui:define name="content">
+                    <style>
+                        .college{
+                            width:250px;
+                            height: 400px;
+                            background-color: rgba(256, 256, 256, 0.3);
+                            border-radius: 5px
+                        }
+
+                        .img{
+                            width:250px;
+                            height:250px;
+                        }
+
+                        div#right{
+                            padding-left:950px;
+                        }
+                        #title{
+                            font-size: 20pt;
+                            margin-bottom: 10px;
+                        }
+                        .commandButton{
+                            background-color: white;
+                            border-radius: 10px;
+                            margin-bottom: 10px;
+                        }
+
+                    </style>
+
+                    <div align="center" id="title">American Top10 Universities</div>
+                    <h:commandButton value="按学费升序排序" action="#{collegeInfo.feeAsc_process()}" styleClass="commandButton"/>
+                    <h:commandButton value="按大学排名排序" action="#{collegeInfo.default_process()}" styleClass="commandButton"/>
+                    <h:panelGrid columns="4" cellpadding="5">
+
+                        <c:forEach items="#{collegeInfo.CInfo}" var="collegeShow">
+                            <h:panelGrid columns="1" cellpadding="5" class="college"> 
+                                <h:commandLink action="#{collegeInfo.getCollegeDetailsById()}">
+                                    <h:graphicImage value="#{collegeShow.getPic()}" class="img" />
+                                    <f:param name="college_id" value="#{collegeShow.getCid()}" />
+                                    <f:param name="user_id" value="#{currentUser.userId}" />
+                                </h:commandLink>                          
+                                <h:outputText escape="false" value="#{collegeShow.getIntroduction()} " />           
+                            </h:panelGrid>
+
+                        </c:forEach>
+                    </h:panelGrid>
+                </ui:define>
+            </ui:composition>
+        </h:form>
+    </h:body>
+</html>
+

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/templateAdmin.xhtml">
+        <ui:define name="content">
+            <h2> 
+                <h:outputText value="Sharing Create"></h:outputText>
+            </h2>
+            <div align="center" style="padding:5px">
+
+                <h:form>
+                    <h:panelGrid columns="2" style="padding: 10px" >
+                        <h:outputLabel value="文章ID：" for="SId" />
+                        <h:inputText id="SId" value="#{sharingController.selected.SId}" title="#{bundle.CreateSharingTitle_SId}" required="true" requiredMessage="#{bundle.CreateSharingRequiredMessage_SId}"/>
+                        <h:outputLabel value="文章标题：" for="STitle" />
+                        <h:inputText id="STitle" value="#{sharingController.selected.STitle}" title="#{bundle.CreateSharingTitle_STitle}" required="true" requiredMessage="#{bundle.CreateSharingRequiredMessage_STitle}"/>
+                        <h:outputLabel value="发布日期：" for="SDate" />
+                        <h:inputText id="SDate" value="#{sharingController.selected.SDate}" title="#{bundle.CreateSharingTitle_SDate}" required="true" requiredMessage="#{bundle.CreateSharingRequiredMessage_SDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:inputText>
+                        <h:outputLabel value="文章内容：" for="SContent" />
+                        <h:inputTextarea rows="4" cols="30" id="SContent" value="#{sharingController.selected.SContent}" title="#{bundle.CreateSharingTitle_SContent}" required="true" requiredMessage="#{bundle.CreateSharingRequiredMessage_SContent}"/>
+                        <h:outputLabel value="点赞数：" for="SUp" />
+                        <h:inputText id="SUp" value="#{sharingController.selected.SUp}" title="#{bundle.CreateSharingTitle_SUp}" />
+                        <h:outputLabel value="作者ID：" for="userUId" />
+                        <h:selectOneMenu id="userUId" value="#{sharingController.selected.userUId}" title="#{bundle.CreateSharingTitle_userUId}" required="true" requiredMessage="#{bundle.CreateSharingRequiredMessage_userUId}">
+                            <f:selectItems value="#{userController.itemsAvailableSelectOne}"/>
+                        </h:selectOneMenu>
+                    </h:panelGrid>
+                    <h:panelGroup id="messagePanel" layout="block">
+                        <h:messages errorStyle="color: darkcyan" infoStyle="color: darkcyan" layout="table"/>
+                    </h:panelGroup>
+                    <h:panelGrid  columns="3" cellpadding="25">
+                        <h:commandButton value="保存" action="#{sharingController.create}" />
+                        <h:commandButton action="#{sharingController.prepareList}" value="显示所有文章信息" immediate="true"/>
+                        <h:commandButton value="返回" action="/sharing_ad/List" immediate="true"/>
+                        <!--将原来的报错并显示所有改为不报错直接进入list页面-->
+                  </h:panelGrid>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

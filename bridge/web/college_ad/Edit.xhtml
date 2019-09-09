@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      >
+
+    <ui:composition template="/templateAdmin.xhtml">        
+        <ui:define name="content">            
+            <h2> 
+                <h:outputText value="College Edit"></h:outputText>
+            </h2>
+            <div align="center" style="padding:5px">
+                <h:form>
+                    <h:panelGrid columns="4" cellpadding="10">
+
+                        <h:outputLabel value="ID" for="CId" />
+                        <h:inputText id="CId" value="#{collegeController.selected.CId}" title="#{bundle.EditCollegeTitle_CId}" required="true" requiredMessage="#{bundle.EditCollegeRequiredMessage_CId}"/>
+                        <h:outputLabel value="名称-中文" for="CNameCh" />
+                        <h:inputText id="CNameCh" value="#{collegeController.selected.CNameCh}" title="#{bundle.EditCollegeTitle_CNameCh}" required="true" requiredMessage="#{bundle.EditCollegeRequiredMessage_CNameCh}"/>
+                        <h:outputLabel value="名称-英文" for="CNameEn" />
+                        <h:inputText id="CNameEn" value="#{collegeController.selected.CNameEn}" title="#{bundle.EditCollegeTitle_CNameEn}" required="true" requiredMessage="#{bundle.EditCollegeRequiredMessage_CNameEn}"/>
+                        <h:outputLabel value="国家" for="CCountry" />
+                        <h:inputText id="CCountry" value="#{collegeController.selected.CCountry}" title="#{bundle.EditCollegeTitle_CCountry}" required="true" requiredMessage="#{bundle.EditCollegeRequiredMessage_CCountry}"/>
+                        <h:outputLabel value="网址" for="CSite" />
+                        <h:inputText id="CSite" value="#{collegeController.selected.CSite}" title="#{bundle.EditCollegeTitle_CSite}" required="true" requiredMessage="#{bundle.EditCollegeRequiredMessage_CSite}"/>
+                        <h:outputLabel value="有关信息" for="CInfo" />
+                        <h:inputTextarea rows="4" cols="30" id="CInfo" value="#{collegeController.selected.CInfo}" title="#{bundle.EditCollegeTitle_CInfo}" required="true" requiredMessage="#{bundle.EditCollegeRequiredMessage_CInfo}"/>
+                        <h:outputLabel value="图片" for="CPic" />
+                        <h:inputText id="CPic" value="#{collegeController.selected.CPic}" title="#{bundle.EditCollegeTitle_CPic}" required="true" requiredMessage="#{bundle.EditCollegeRequiredMessage_CPic}"/>
+                        <h:outputLabel value="Tofel" for="CTofel" />
+                        <h:inputText id="CTofel" value="#{collegeController.selected.CTofel}" title="#{bundle.EditCollegeTitle_CTofel}" />
+                        <h:outputLabel value="Gre" for="CGre" />
+                        <h:inputText id="CGre" value="#{collegeController.selected.CGre}" title="#{bundle.EditCollegeTitle_CGre}" />
+                        <h:outputLabel value="GPA" for="CGPA" />
+                        <h:inputText id="CGPA" value="#{collegeController.selected.CGPA}" title="#{bundle.EditCollegeTitle_CGPA}" />
+                        <h:outputLabel value="学费" for="CFee" />
+                        <h:inputText id="CFee" value="#{collegeController.selected.CFee}" title="#{bundle.EditCollegeTitle_CFee}" />
+                    </h:panelGrid>           
+                    <h:panelGroup id="messagePanel" layout="block">
+                        <h:messages errorStyle="color: darkcyan" infoStyle="color: darkcyan" layout="table"/>
+                    </h:panelGroup>
+                    <h:panelGrid  columns="3" cellpadding="25">
+                        <h:commandButton value="确定" action="#{collegeController.update}" onclick="if (!confirm('确定保存修改？'))
+                            return false;"/>
+                        <h:commandButton action="/college_ad/View" value="查看" immediate="true"/>
+                        <h:commandButton value="返回" action="/college_ad/List" immediate="true"/>
+                        <!--将原来的报错并显示所有改为不报错直接进入list页面-->
+                        <br/><br/>
+                    </h:panelGrid>         
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

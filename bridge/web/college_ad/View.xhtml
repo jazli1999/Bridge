@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      >
+
+    <ui:composition template="/templateAdmin.xhtml">
+        <ui:define name="content">
+            <h2> 
+                <h:outputText value="College View"></h:outputText>
+            </h2>
+            <div align="center" >
+                <h:form >
+                    <h:panelGrid columns="2" cellpadding="15">
+                        <h:panelGrid columns="2" cellpadding="15">
+                            <h:outputText value="Id" style="font-size: 15px;text-align:left"/>
+                            <h:outputText value="#{collegeController.selected.CId}" title="#{bundle.CreateCollegeTitle_CId}" />                      
+                            <h:outputText value="名称-中文：" style="font-size: 15px"/>
+                            <h:outputText value="#{collegeController.selected.CNameCh}" title="#{bundle.CreateCollegeTitle_CNameCh}"/>                       
+                            <h:outputText value="名称-英文：" style="font-size: 15px"/>
+                            <h:outputText value="#{collegeController.selected.CNameEn}" title="#{bundle.CreateCollegeTitle_CNameEn}" />                       
+                            <h:outputText value="所在国家：" style="font-size: 15px"/>
+                            <h:outputText value="#{collegeController.selected.CCountry}" title="#{bundle.CreateCollegeTitle_CCountry}" />
+                            <h:outputText value="Tofel：" style="font-size: 15px"/>
+                            <h:outputText value="#{collegeController.selected.CTofel}" title="#{bundle.CreateCollegeTitle_CTofel}" />
+                            <h:outputText value="Gre：" style="font-size: 15px"/>
+                            <h:outputText value="#{collegeController.selected.CGre}" title="#{bundle.CreateCollegeTitle_CGre}"/>
+                            <h:outputText value="GPA：" style="font-size: 15px"/>
+                            <h:outputText value="#{collegeController.selected.CGPA}" title="#{bundle.CreateCollegeTitle_CGPA}"/>
+                            <h:outputText value="学费：" style="font-size: 15px"/>
+                            <h:outputText value="#{collegeController.selected.CFee}" title="#{bundle.CreateCollegeTitle_CFee}" /> 
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" cellpadding="15">
+                            <h:outputText value="图片：" style="font-size: 15px"/>
+                            <h:outputText value="#{collegeController.selected.CPic}" title="#{bundle.CreateCollegeTitle_CPic}" />
+                            <h:outputText value="网页地址：" style="font-size: 15px"/>
+                            <h:outputText value="#{collegeController.selected.CSite}" title="#{bundle.CreateCollegeTitle_CSite}"/>
+                            <h:outputText value="相关信息：" style="font-size: 15px"/>
+                            <h:outputText value="#{collegeController.selected.CInfo}" title="#{bundle.CreateCollegeTitle_CInfo}"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <br />
+                    <h:panelGroup id="messagePanel" layout="block">
+                        <h:messages errorStyle="color: darkcyan" infoStyle="color: darkcyan" layout="table"/>
+                    </h:panelGroup>
+                    <h:commandButton value="返回" action="/college_ad/List" immediate="true"/>
+                    <h:commandButton value="删除"  action="#{collegeController.destroyAndView}" onclick="if (!confirm('确定删除？'))
+                                return false;"/>
+                    <h:commandButton  value="添加大学信息" action="#{collegeController.prepareCreate}" />
+                    <h:commandButton value="编辑" action="/college_ad/Edit" />
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

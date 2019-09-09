@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/templateAdmin.xhtml">
+        <ui:define name="content">
+            <h2> 
+                <h:outputText value="User List"></h:outputText>
+            </h2>
+            <h:form >
+                Search :
+                <h:inputText value="#{userFacade.keyword}" style="width: 120px; text-align: right" /><h:commandButton value="Submit" action="#{userController.getItemsByUserSearch}" style="margin-left: 5px" />
+            </h:form>
+            <h:form style="padding-top: 20px">
+                <h:outputText escape="false" value="用户信息为空" rendered="#{userController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{userController.items.rowCount > 0}">
+                    <h:dataTable value="#{userController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="用户ID"/>
+                            </f:facet>
+                            <h:outputText value="#{item.UId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="用户昵称"/>
+                            </f:facet>
+                            <h:outputText value="#{item.UUsername}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="用户姓名"/>
+                            </f:facet>
+                            <h:outputText value="#{item.UName}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="用户密码"/>
+                            </f:facet>
+                            <h:outputText value="#{item.UPassword}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="微信"/>
+                            </f:facet>
+                            <h:outputText value="#{item.UWechat}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="邮箱"/>
+                            </f:facet>
+                            <h:outputText value="#{item.UEmail}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="专业"/>
+                            </f:facet>
+                            <h:outputText value="#{item.UMajor}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="状态"/>
+                            </f:facet>
+                            <h:outputText value="#{item.UState}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="学校ID"/>
+                            </f:facet>
+                            <h:outputText value="#{item.collegeCId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{userController.prepareView}" value="查看"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{userController.destroy}" value="删除" onclick="if (!confirm('确定删除？'))
+                                            return false;"/>
+                        </h:column>
+                    </h:dataTable>
+                    <h:commandLink action="#{userController.previous}" value="#{bundle.Previous} #{userController.pagination.pageSize}" rendered="#{userController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{userController.next}" value="#{bundle.Next} #{userController.pagination.pageSize}" rendered="#{userController.pagination.hasNextPage}"/>&nbsp;
+                </h:panelGroup>
+                <br />
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: darkcyan" infoStyle="color: darkcyan" layout="table"/>
+                </h:panelGroup>
+            </h:form>
+            <h:form >
+                <div id="button" align="center" >
+                    <h:panelGrid columns="2" cellpadding="15">
+                        <h:commandButton  value="返回" action="#{userController.refresh()}" />
+
+                        <h:commandButton  value="添加用户信息" action="/user_ad/Create" />
+                    </h:panelGrid>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

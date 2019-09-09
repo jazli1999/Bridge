@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>User Info Page</title>
+        <h:outputStylesheet name="css/jsfcrud.css" />
+    </h:head>
+
+    <h:body>
+        <h:form>
+            <ui:composition template="/template.xhtml">
+
+                <ui:define name="content">
+
+                    <div style="position:absolute;width: 80%;border-bottom: 15px;">
+                        <div id="header" style="position:relative;">
+                            <p>
+
+                                <h:graphicImage id="banner" value="/resources/cover_photo.jpg" alt=""
+                                                style="width: 65%;
+                                                transform:  translateX(-50px) translateY(20px);
+                                                margin-left: 10%;" />
+                                <h:outputText value="#{userController.getUUsername()}" style="
+                                              display: inline;
+                                              font-family: Helvetica, Arial, sans-serif;
+                                              font-size: 32px;
+                                              transform: translateX(-660px) translateY(230px);
+                                              z-index: 3;
+                                              font-weight: 500;
+                                              position: absolute;
+                                              color: #fff;
+                                              text-shadow: 0 0 5px rgba(0, 0, 0, .8);" />
+                                <h:graphicImage id="profile_icon" value="#{userController.getUAvatar()}"
+                                                style="width:100px;
+                                                transform: translateX(-10px) translateY(-50px);
+                                                z-index: 2;
+                                                border-radius: 50%;
+                                                border: white 3px solid;
+                                                "/>
+
+                            </p>
+                        </div>
+                    </div>
+                    <div style="margin-left: 2%;margin-top: 330px;float: left;width: 33%">
+                        <p:panel id="basic" header="简介"
+                                 style="margin-bottom:20px;
+                                 text-shadow: 0 0 1px rgba(255, 255, 255, .5);
+                                 color:black;background-color: rgba(255,255,255,0.8);border: none; text-align:left;font-size: 18px;padding: 5px 5px;border-radius: 2px;">
+
+                            <h:panelGrid class="card" columns="2" cellpadding="0">
+                                <h:outputText value="用户ID：" />
+                                <h:outputText value="#{userController.UId}" title="#{bundle.ViewUserTitle_UId}" />
+                                <h:outputText value="用户姓名：" />
+                                <h:outputText value="#{userController.getUUsername()}"
+                                              title="#{bundle.ViewUserTitle_UUsername}" />
+                                <h:outputText value="用户昵称：" />
+                                <h:outputText value="#{userController.UName}" title="#{bundle.ViewUserTitle_UName}" />
+
+                                <h:outputText value="GPA：" />
+                                <h:outputText value="#{userController.UGPA}" title="#{bundle.ViewUserTitle_UGPA}" />
+                                <h:outputText value="Tofel：" />
+                                <h:outputText value="#{userController.UTofel}" title="#{bundle.ViewUserTitle_UTofel}" />
+                                <h:outputText value="Gre：" />
+                                <h:outputText value="#{userController.UGre}" title="#{bundle.ViewUserTitle_UGre}" />
+                                <h:outputText value="微信：" />
+                                <h:outputText value="#{userController.UWechat}" title="#{bundle.ViewUserTitle_UWechat}" />
+                                <h:outputText value="邮箱：" />
+                                <h:outputText value="#{userController.UEmail}" title="#{bundle.ViewUserTitle_UEmail}" />
+                                <h:outputText value="相关信息：" />
+                                <h:outputText value="#{userController.UInfo}" title="#{bundle.ViewUserTitle_UInfo}" />
+                                <h:outputText value="专业：" />
+                                <h:outputText value="#{userController.UMajor}" title="#{bundle.ViewUserTitle_UMajor}" />
+                                <h:outputText value="状态：" />
+                                <h:outputText value="申请中" title="#{bundle.ViewUserTitle_UState}" rendered="#{userController.u_state == 0}" />
+                                <h:outputText value="已录取" title="#{bundle.ViewUserTitle_UState}" rendered="#{userController.u_state == 1}" />
+                                <h:commandLink action="#{userController.prepareEditPage}" value="编辑" rendered="#{userController.UId == currentUser.userId}"/>
+                            </h:panelGrid>
+                        </p:panel>
+                    </div>
+                    <div style=" margin-left: 3%;margin-top: 330px;width: 55%;float: left">
+                        <div>
+                            <p:panel id="share" header="发表过的分享"
+                                     style="margin-bottom:20px;
+                                     text-shadow: 0 0 1px rgba(255, 255, 255, .9);
+                                     color:black;background-color: rgba(255,255,255,0.7);border: none; text-align:left;font-size: 18px;padding: 5px 5px;border-radius: 2px;">
+
+                                    <c:forEach items="#{userController.lists}" var="sharing">
+                                        <h:commandLink value="#{sharing.STitle}" action="#{sharingController.prepareView}" style="text-decoration: none">
+                                            <f:param name="sharing_id" value="#{sharing.SId}" />
+                                        </h:commandLink>
+                                        <p />
+                                    </c:forEach>
+                                    <br style="margin-bottom: 10px;"></br>
+                                    
+                            </p:panel>
+                        </div>
+
+                        <div style=" margin-top: 5px;">
+                            <p:panel id="basicschool" header="感兴趣的高校"
+                                     style="margin-bottom:20px;
+                                     text-shadow: 0 0 1px rgba(255, 255, 255, .3);
+                                     color:black;background-color: rgba(255,255,255,0.85);border: none; text-align:left;font-size: 18px;padding: 5px 5px;border-radius: 2px;">
+
+                                <h:panelGrid columns="4" cellpadding="10">
+                                    <c:forEach items="#{userController.starred}" var="college">
+                                        <div>
+                                            <h:graphicImage width="30px" value="#{college.getCPic()}" />
+                                            <h:commandLink value="#{college.getCNameCh()}"
+                                                           action="#{collegeInfo.getCollegeDetailsById}" style="text-decoration: none">
+                                                <f:param name="college_id" value="#{college.getCId()}" />
+                                                <f:param name="user_id" value="#{currentUser.userId}" />
+                                            </h:commandLink>
+                                        </div>
+                                    </c:forEach>
+
+                                    <br style="margin-bottom: 10px;"></br>
+                                </h:panelGrid>
+
+                            </p:panel>
+                        </div>
+                    </div>
+
+
+                </ui:define>
+            </ui:composition>
+        </h:form>
+    </h:body>
+
+</html>

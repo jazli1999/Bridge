@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" />
+
+
+    </h:head>
+    <h:body>
+        <style>
+            div.father {
+                background-image: url(bridge.jpg);
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                left: 0;
+                top: 0;
+                overflow: auto;
+
+            }
+
+            div.background {
+                width: 600px;
+                height: 530px;
+                background: rgba(0, 0, 0, 0.4);
+                margin-top: 100px;
+                border-radius: 10px;
+
+            }
+
+            div.title {
+                width: 600px;
+                height: 100px;
+                background: rgba(0, 0, 0, 0.5);
+                border-top-right-radius: 10px;
+                border-top-left-radius: 10px;
+                padding-left: 0;
+            }
+
+            .logo {
+                font-size: 35pt;
+                font-family: Chaparral Pro;
+                letter-spacing: 5px;
+                color: white;
+                padding-left: 20px;
+                font-weight: bold;
+
+            }
+
+            #title {
+                font-size: 8pt;
+                color: white;
+                padding-left: 20px;
+            }
+
+            div.log {
+                width: 400px;
+                height: 400px;
+                opacity: 1;
+                padding-top: 0px;
+                font-family: "Trebuchet MS";
+            }
+
+            .login {
+                font-family: "Trebuchet MS";
+            }
+
+            /*切换两个form的link的样式*/
+            p.change_link {
+                position: absolute;
+                color: white;
+                top: 350px;
+                left: 0px;
+                height: 20px;
+                width: 353px;
+                padding: 17px 30px 20px 30px;
+                font-size: 16px;
+                font-family: "Trebuchet MS";
+                text-align: right;
+                border-radius: 0 0 5px 5px;
+
+            }
+
+
+            #wrapper p.change_link a {
+                display: inline-block;
+                font-weight: bold;
+                background: rgb(247, 248, 241);
+                padding: 2px 6px;
+                color: rgb(29, 162, 193);
+                margin-left: 10px;
+                text-decoration: none;
+                border-radius: 4px;
+                border: 1px solid rgb(203, 213, 214);
+                transition: all 0.4s linear;
+            }
+
+            #toregister:target~#wrapper #register,
+            #tologin:target~#wrapper #login {
+                z-index: 22;
+                animation-name: fadeInLeft;
+                animation-delay: .1s;
+            }
+
+            #toregister:target~#wrapper #login,
+            #tologin:target~#wrapper #register {
+                animation-name: fadeOutLeft;
+            }
+
+            /*动画效果*/
+            .animate {
+                animation-duration: 0.5s;
+                animation-timing-function: ease;
+                animation-fill-mode: both;
+            }
+
+            /*两个表的样式*/
+            #register {
+                position: absolute;
+                top: 200px;
+                background: rgb(247, 247, 247);
+                border-radius: 5px;
+                width: 400px;
+                height: 280px;
+                font-family: "Trebuchet MS";
+            }
+
+            #login {
+                position: absolute;
+                top: 200px;
+                background: rgb(247, 247, 247);
+                border-radius: 5px;
+                font-family: "Trebuchet MS";
+            }
+
+            #register {
+                z-index: 21;
+                opacity: 0;
+            }
+
+            #login {
+                z-index: 22;
+            }
+
+            /*标题颜色*/
+            h1 {
+                color: #066A75;
+            }
+        </style>
+
+        <div class="father" align="center">
+            <div class="background" align="center">
+                <div class="title" align="left">
+
+                    <h:panelGrid columns="2" cellpadding="0">
+                        <h:outputText styleClass="logo" value="BRIDGE" />
+                        <b>
+                            <h:outputText id="title" value="北邮留学服务及信息咨询管理平台" /></b>
+                    </h:panelGrid>
+                </div>
+
+                <div align="center" class="log">
+                    <a class="hiddenanchor" id="toregister"></a>
+                    <a class="hiddenanchor" id="tologin"></a>
+                    <div id="wrapper">
+                        <div id="login" class="animate form">
+                            <form>
+                                <h1>Log in</h1>
+                                <p:tabView>
+
+                                    <p:tab title="User">
+                                        <div align="center">
+                                            <h:form>
+                                                <h:panelGrid columns="2" cellpadding="10">
+                                                    <h:outputText value="Username" />
+                                                    <p:inputText id="username" value="#{currentUser.username}"
+                                                                 required="true" requiredMessage="Username cannot be empty" />
+                                                    <h:outputText value="Password" />
+                                                    <p:password id="password" value="#{currentUser.password}"
+                                                                required="true" requiredMessage="Password cannot be empty" />
+                                                </h:panelGrid>
+                                                <h:outputText value="Please Enter Your Username And Password"
+                                                              style="font-size:12pt; color: #4e6a71"
+                                                              rendered="#{currentUser.loginStatus == 0}" />
+                                                <h:outputText value="Wrong Password"
+                                                              style="font-size:12pt; color: firebrick"
+                                                              rendered="#{currentUser.loginStatus == 2}" />
+                                                <h:outputText value="User Does Not Exist"
+                                                              style="font-size:12pt; color: firebrick"
+                                                              rendered="#{currentUser.loginStatus == 3}" />
+                                                <h:outputText value="Username Already Exists"
+                                                              style="font-size:12pt; color: firebrick"
+                                                              rendered="#{currentUser.loginStatus == 4}" /><br /><br />
+                                                <p:commandButton id="login" value="Log In" type="submit"
+                                                                 action="#{currentUser.validateUserLogin}" />
+                                            </h:form>
+                                        </div>
+                                    </p:tab>
+
+                                    <p:tab title="Administrator">
+                                        <h:form>
+                                            <div align="center">
+                                                <h:panelGrid columns="2" cellpadding="10" styleClass="login">
+                                                    <h:outputText value="Administrator" />
+                                                    <p:inputText value="#{adminLogin.ad_name}" />
+                                                    <h:outputText value="Password" />
+                                                    <p:password value="#{adminLogin.ad_password}" />
+                                                </h:panelGrid>
+                                                <p:commandButton value="Log In As Administrator"
+                                                                 action="#{adminLogin.checkpassword}" />
+                                                <h:outputText value="Error " style="color: red"
+                                                              rendered="#{!adminLogin.isResult()}" />
+                                            </div>
+
+                                        </h:form>
+                                    </p:tab>
+
+                                </p:tabView>
+
+                                <p class="change_link">
+                                    Not a member yet ?
+                                    <a href="#toregister" class="to_register">Join us</a>
+                                </p>
+
+                            </form>
+                        </div>
+
+                        <div id="register" class="animate form" align="center">
+                            <form>
+                                <h1> Sign up </h1>
+                                <h:form>
+                                    <h:panelGrid columns="1" cellpadding="2px">
+                                        <h:outputText value="Username" />
+                                        <p:inputText id="username" value="#{currentUser.username}" required="true"
+                                                     requiredMessage="Username cannot be empty" />
+                                        <h:outputText value="Password" />
+                                        <p:password id="password" value="#{currentUser.password}" required="true"
+                                                    requiredMessage="Password cannot be empty" />
+                                    </h:panelGrid>
+                                    <p:commandButton id="signup" value="Sign Up" action="#{currentUser.createUser}" />
+                                </h:form>
+                                <p class="change_link">
+                                    Already a member ?
+                                    <a href="#tologin" class="to_register"> Go and log in </a>
+
+                                </p>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </h:body>
+
+</html>

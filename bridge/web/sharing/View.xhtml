@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Bridge</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+    </h:head>
+    <h:body>
+        <h:form>
+            <ui:composition template="/template.xhtml">
+                <ui:define name="content">
+                    <style>
+                        .transparent-bg {
+                            background: transparent;
+                            background-color: rgba(0, 0, 0, 0);
+                        }
+
+                        #vertical-outliner-1 {
+                            display: flex;
+                        }
+
+                        div.block-white {
+                            background-color: rgba(256, 256, 256, 0.4); 
+                            padding-left: 0px;
+                            padding-right: 0px;
+                            padding-bottom: 20px;
+                            margin-left: 150px;
+                            margin-right: 20px;
+                            margin-top: 10px;
+                            margin-bottom: 10px;
+                            width: 300px;
+                            font-family: sans-serif;
+                            border-radius: 5px
+                        }
+
+                        .link-text {
+                            color: #d2e6f0
+                        }
+
+                        div.replace {
+                            border-radius: 5px
+                        }
+
+                        div.block-dark {
+                            background-color: rgba(0, 0, 0, 0.3); 
+                            padding-left: 0px;
+                            padding-right: 0px;
+                            padding-bottom: 20px;
+                            padding-top: 0px;
+                            margin-left: 20px;
+                            margin-right: 20px;
+                            margin-top: 10px;
+                            margin-bottom: 10px;
+                            text-align: left;
+                            width: 600px;
+                            font-family: sans-serif;
+                            border-radius: 5px;
+                        }
+
+                        .header-bg {
+                            font-weight: bold;
+                            color: white;
+                            background-color: graytext;
+                            width: 100%;
+                            margin-top: 0px;
+                            padding-top: 5px;
+                            padding-bottom: 10px;
+                            border-radius: 5px;
+                            font-family: Chaparral Pro;
+                            box-shadow: 0 0 3px 1px #333;
+                            text-align: center
+                        }
+
+                    </style>
+                    <div id="wrap">
+                        <div id="tools" align="right">
+                            <h:panelGrid columns="4" width="400px" style="margin-right: 200px">
+                                <h:commandLink action="#{sharingController.destroyAndView}" value="#{bundle.ViewSharingDestroyLink}"
+                                               rendered="#{userController.loginUser==sharingController.selected.userUId}" class="link-text"/>
+                                <h:link outcome="Edit" value="#{bundle.ViewSharingEditLink}"
+                                        rendered="#{userController.loginUser==sharingController.selected.userUId}" class="link-text"/>
+                                <h:commandLink action="#{sharingController.prepareCreate}" value="#{bundle.ViewSharingCreateLink}  " class="link-text"/>
+                                <h:commandLink action="#{sharingController.prepareList}" value="#{bundle.ViewSharingShowAllLink}   " class="link-text"/>
+                            </h:panelGrid>
+                        </div>
+                        <div id="vertical-outliner-1">
+                            <div id="avatar" class="block-white">
+                                <h:graphicImage value="#{sharingController.selected.userUId.getUAvatar()}" style="width: 150px; padding-top: 50px" />
+                                <p />
+                                <h:outputText value="#{sharingController.selected.userUId.getUUsername()}" />
+                                <p />
+                                <h:commandButton  image="/resources/sharing/up.png" value="点赞" action="#{sharingController.addUp()}" rendered="#{sharingController.showUp()==1}"/>
+                                <h:commandButton image="/resources/sharing/notup.png" value="点赞过了" action="#{sharingController.removeUp()}" rendered="#{sharingController.showUp()==0}"/>
+                                <h:outputText value="#{sharingController.selected.SUp}" title="#{bundle.ViewSharingTitle_SUp}"/>
+                            </div>
+                            <div id="passage" class="block-dark">
+                                <div id="title" class="header-bg">
+                                    <h1 align="center" style="padding-bottom: 0px; font-size: 24pt"> #{sharingController.selected.STitle}
+                                    </h1>
+                                    <h:outputText value="#{sharingController.selected.SDate}" title="#{bundle.ViewSharingTitle_SDate}">
+                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                    </h:outputText>
+                                </div>
+                                <div id="text" style="margin-left: 40px; margin-right: 40px; margin-top: 20px; margin-bottom: 20px" >
+                                    <h:outputText escape="false" value="#{sharingController.selected.SContent}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ui:define>
+            </ui:composition>
+        </h:form>
+    </h:body>
+</html>

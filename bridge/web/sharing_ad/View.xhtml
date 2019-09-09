@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/templateAdmin.xhtml">
+        <ui:define name="content">
+            <h2> 
+                <h:outputText value="Sharing View"></h:outputText>
+            </h2>
+            <div align="center" >
+                <h:form>
+                    <h:panelGrid columns="2" cellpadding="15" style="text-align:left">
+                        <h:outputText value="文章ID："/>
+                        <h:outputText value="#{sharingController.selected.SId}" title="#{bundle.ViewSharingTitle_SId}"/>
+                        <h:outputText value="文章标题："/>
+                        <h:outputText value="#{sharingController.selected.STitle}" title="#{bundle.ViewSharingTitle_STitle}"/>
+                        <h:outputText value="发布日期："/>
+                        <h:outputText value="#{sharingController.selected.SDate}" title="#{bundle.ViewSharingTitle_SDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="文章内容："/>
+                        <h:outputText value="#{sharingController.selected.SContent}" title="#{bundle.ViewSharingTitle_SContent}"/>
+                        <h:outputText value="点赞数："/>
+                        <h:outputText value="#{sharingController.selected.SUp}" title="#{bundle.ViewSharingTitle_SUp}"/>
+                        <h:outputText value="作者ID："/>
+                        <h:outputText value="#{sharingController.selected.userUId}" title="#{bundle.ViewSharingTitle_userUId}"/>
+                    </h:panelGrid>
+                    <h:panelGroup id="messagePanel" layout="block">
+                        <h:messages errorStyle="color: darkcyan" infoStyle="color: darkcyan" layout="darkcyan"/>
+                    </h:panelGroup>
+                    <br />
+                    <h:commandButton value="返回" action="/sharing_ad/List" immediate="true"/>
+                    <h:commandButton value="删除"  action="#{sharingController.destroyAndView}" onclick="if (!confirm('确定删除？'))
+                            return false;"/>
+                    <h:commandButton  value="添加文章信息" action="#{sharingController.prepareCreate}" />
+                    <h:commandButton value="编辑" action="/sharing_ad/Edit" />
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

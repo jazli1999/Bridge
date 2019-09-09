@@ -43,7 +43,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "College.findByCTofel", query = "SELECT c FROM College c WHERE c.cTofel = :cTofel")
     , @NamedQuery(name = "College.findByCGre", query = "SELECT c FROM College c WHERE c.cGre = :cGre")
     , @NamedQuery(name = "College.findByCGPA", query = "SELECT c FROM College c WHERE c.cGPA = :cGPA")
-    , @NamedQuery(name = "College.findByCFee", query = "SELECT c FROM College c WHERE c.cFee = :cFee")})
+    , @NamedQuery(name = "College.findByCFee", query = "SELECT c FROM College c WHERE c.cFee = :cFee")
+    , @NamedQuery(name = "College.findAllStars", query = "SELECT u FROM College c JOIN c.userCollection u WHERE c.cId = :cId")
+    , @NamedQuery(name = "College.CFeeAsc", query = "SELECT c  FROM College c order by c.cFee Asc")
+    , @NamedQuery(name = "College.findBySearch", query = "SELECT c FROM College c WHERE c.cNameCh LIKE :keyWord or c.cNameEn LIKE :keyWord")
+    , @NamedQuery(name = "College.getStarStatus", query = "SELECT u FROM College c JOIN c.userCollection u WHERE c.cId = :cId AND u.uId = :uId")
+})
 public class College implements Serializable {
 
     private static final long serialVersionUID = 1L;

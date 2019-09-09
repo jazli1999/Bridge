@@ -1,0 +1,62 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2019-9-3, 19:14:05
+    Author     : Administrator
+*/
+a {
+    color: white;
+}
+.ad_button1{
+    background-color: darkcyan;
+    border:solid;
+    border-color: darkcyan;;
+    color: white;
+    padding: 25px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 4%;
+    border-radius: 8%;
+    position: fixed;
+    top:205px;
+    left:150px;
+    height:100px;
+}
+.ad_button2{
+    background-color: darkcyan;
+    border:solid;
+    border-color: darkcyan;;
+    color: white;
+    padding: 25px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 4%;
+    height: 100px;
+    position: fixed;
+    top:300px;
+    left:150px
+}
+.ad_button3{
+    background-color: darkcyan;
+    border:solid;
+    border-color: darkcyan;;
+    color: white;
+    padding: 25px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 4%;
+    border-radius: 8%;
+    position: fixed;
+    top:390px;
+    left:150px;
+    height: 100px;
+}

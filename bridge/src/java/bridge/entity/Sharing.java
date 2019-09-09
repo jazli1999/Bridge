@@ -6,13 +6,16 @@
 package bridge.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -22,6 +25,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,8 +39,20 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Sharing.findBySId", query = "SELECT s FROM Sharing s WHERE s.sId = :sId")
     , @NamedQuery(name = "Sharing.findBySTitle", query = "SELECT s FROM Sharing s WHERE s.sTitle = :sTitle")
     , @NamedQuery(name = "Sharing.findBySDate", query = "SELECT s FROM Sharing s WHERE s.sDate = :sDate")
-    , @NamedQuery(name = "Sharing.findBySUp", query = "SELECT s FROM Sharing s WHERE s.sUp = :sUp")})
+    , @NamedQuery(name = "Sharing.findBySUp", query = "SELECT s FROM Sharing s WHERE s.sUp = :sUp")
+    , @NamedQuery(name = "Sharing.orderByDate", query = "SELECT s FROM Sharing s order by s.sDate desc")
+    , @NamedQuery(name = "Sharing.findBySearch", query = "SELECT s FROM Sharing s WHERE s.sTitle LIKE :keyWord ")
+    , @NamedQuery(name = "Sharing.orderByUp", query = "SELECT s FROM Sharing s order by s.sUp desc")
+    , @NamedQuery(name="Sharing.findbyUid",query="SELECT s FROM Sharing s Where s.userUId=:sUid")
+    , @NamedQuery(name = "userupsharing.findSpecific", query = "SELECT c FROM Sharing s JOIN s.userCollection c where s.sId=:sid and c.uId=:uid")
+})
 public class Sharing implements Serializable {
+
+    @JoinTable(name = "userupsharing", joinColumns = {
+        @JoinColumn(name = "sharing_s_id", referencedColumnName = "s_id")}, inverseJoinColumns = {
+        @JoinColumn(name = "user_u_id", referencedColumnName = "u_id")})
+    @ManyToMany
+    private Collection<User> userCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,22 +77,28 @@ public class Sharing implements Serializable {
     @Column(name = "s_content")
     private String sContent;
     @Column(name = "s_up")
-    private Integer sUp;
+    private Integer sUp = 0;
     @JoinColumn(name = "user_u_id", referencedColumnName = "u_id")
     @ManyToOne(optional = false)
     private User userUId;
 
     public Sharing() {
+        this.sId = (int) System.currentTimeMillis();
+        Date currentTime = new Date();
+        this.sDate = currentTime;
     }
 
     public Sharing(Integer sId) {
-        this.sId = sId;
+        this.sId = (int) System.currentTimeMillis();
+        Date currentTime = new Date();
+        this.sDate = currentTime;
     }
 
     public Sharing(Integer sId, String sTitle, Date sDate, String sContent) {
-        this.sId = sId;
+        this.sId = (int) System.currentTimeMillis();
         this.sTitle = sTitle;
-        this.sDate = sDate;
+        Date currentTime = new Date();
+        this.sDate = currentTime;
         this.sContent = sContent;
     }
 
@@ -152,5 +174,14 @@ public class Sharing implements Serializable {
     public String toString() {
         return "bridge.entity.Sharing[ sId=" + sId + " ]";
     }
-    
+
+    @XmlTransient
+    public Collection<User> getUserCollection() {
+        return userCollection;
+    }
+
+    public void setUserCollection(Collection<User> userCollection) {
+        this.userCollection = userCollection;
+    }
+
 }

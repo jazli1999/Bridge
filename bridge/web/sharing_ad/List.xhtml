@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/templateAdmin.xhtml">
+        <ui:define name="content">
+            <h2> 
+                <h:outputText value="Sharing List"></h:outputText>
+            </h2>
+            <h:form >
+                Search :
+                <h:inputText value="#{sharingFacade.keyword}" style="width: 120px; text-align: right" /><h:commandButton value="Submit" action="#{sharingController.getItemsBySharingSearch}" style="margin-left: 5px" />
+            </h:form>
+            <h:form style="padding-top: 20px">
+                <h:outputText escape="false" value="找到文章信息为空" rendered="#{sharingController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{sharingController.items.rowCount > 0}" style="padding-top: 30px">
+                    <h:dataTable value="#{sharingController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="文章ID"/>
+                            </f:facet>
+                            <h:outputText value="#{item.SId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="文章标题"/>
+                            </f:facet>
+                            <h:outputText value="#{item.STitle}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="发布日期"/>
+                            </f:facet>
+                            <h:outputText value="#{item.SDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="文章内容"/>
+                            </f:facet>
+                            <h:outputText value="#{item.SContent}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="点赞数"/>
+                            </f:facet>
+                            <h:outputText value="#{item.SUp}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="作者ID"/>
+                            </f:facet>
+                            <h:outputText value="#{item.userUId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{sharingController.prepareView}" value="查看"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{sharingController.prepareEdit}" value="修改"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink value="删除"  action="#{sharingController.destroy}" onclick="if (!confirm('确定删除？'))
+                                            return false;"/>
+                        </h:column>
+                    </h:dataTable>
+                    <h:commandLink action="#{sharingController.previous}" value="#{bundle.Previous} #{sharingController.pagination.pageSize}" rendered="#{sharingController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{sharingController.next}" value="#{bundle.Next} #{sharingController.pagination.pageSize}" rendered="#{sharingController.pagination.hasNextPage}"/>&nbsp;
+                </h:panelGroup>
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: darkcyan" infoStyle="color: darkcyan" layout="table"/>
+                </h:panelGroup>
+            </h:form>
+            <h:form >
+                <div id="button" align="center" >
+                    <h:panelGrid columns="2" cellpadding="15">
+                        <h:commandButton  value="返回" action="#{sharingController.refresh()}" />
+
+                        <h:commandButton  value="添加文章信息" action="/sharing_ad/Create" />
+                    </h:panelGrid>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+
+
+

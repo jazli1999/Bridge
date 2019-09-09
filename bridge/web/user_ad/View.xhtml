@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/templateAdmin.xhtml">   
+        <ui:define name="content">
+            <h2> 
+            <h:outputText value="User View"></h:outputText>
+     </h2>
+            <div align="center" >           
+            <h:form>
+                <h:panelGrid columns="4" cellpadding="15" style=" text-align:left">
+                    <h:outputText value="用户ID："/>
+                    <h:outputText value="#{userController.selected.UId}" title="#{bundle.ViewUserTitle_UId}"/>
+                    <h:outputText value="用户昵称："/>
+                    <h:outputText value="#{userController.selected.UUsername}" title="#{bundle.ViewUserTitle_UUsername}"/>
+                    <h:outputText value="用户姓名："/>
+                    <h:outputText value="#{userController.selected.UName}" title="#{bundle.ViewUserTitle_UName}"/>
+                    <h:outputText value="用户密码："/>
+                    <h:outputText value="#{userController.selected.UPassword}" title="#{bundle.ViewUserTitle_UPassword}"/>
+                    <h:outputText value="GPA："/>
+                    <h:outputText value="#{userController.selected.UGPA}" title="#{bundle.ViewUserTitle_UGPA}"/>
+                    <h:outputText value="Tofel："/>
+                    <h:outputText value="#{userController.selected.UTofel}" title="#{bundle.ViewUserTitle_UTofel}"/>
+                    <h:outputText value="Gre："/>
+                    <h:outputText value="#{userController.selected.UGre}" title="#{bundle.ViewUserTitle_UGre}"/>
+                    <h:outputText value="微信："/>
+                    <h:outputText value="#{userController.selected.UWechat}" title="#{bundle.ViewUserTitle_UWechat}"/>
+                    <h:outputText value="邮箱："/>
+                    <h:outputText value="#{userController.selected.UEmail}" title="#{bundle.ViewUserTitle_UEmail}"/>
+                    <h:outputText value="相关信息："/>
+                    <h:outputText value="#{userController.selected.UInfo}" title="#{bundle.ViewUserTitle_UInfo}"/>
+                    <h:outputText value="专业："/>
+                    <h:outputText value="#{userController.selected.UMajor}" title="#{bundle.ViewUserTitle_UMajor}"/>
+                    <h:outputText value="状态："/>
+                    <h:outputText value="#{userController.selected.UState}" title="#{bundle.ViewUserTitle_UState}"/>
+                    <h:outputText value="头像："/>
+                    <h:outputText value="#{userController.selected.UAvatar}" title="#{bundle.ViewUserTitle_UAvatar}"/>
+                    <h:outputText value="学校ID："/>
+                    <h:outputText value="#{userController.selected.collegeCId}" title="#{bundle.ViewUserTitle_collegeCId}"/>
+                </h:panelGrid>          
+                <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: darkcyan" layout="darkcyan"/>
+                </h:panelGroup>
+                <br />
+                <h:commandButton value="返回" action="/user_ad/List" immediate="true"/>
+                <h:commandButton value="删除"  action="#{userController.destroyAndView}" onclick="if (!confirm('确定删除？')) return false;"/>
+                <h:commandButton  value="添加用户信息" action="#{userController.prepareCreate()}" />             
+            </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

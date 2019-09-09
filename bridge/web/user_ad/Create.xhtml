@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+
+    <ui:composition template="/templateAdmin.xhtml">      
+        <ui:define name="content">
+               <h2> 
+            <h:outputText value="User Create"></h:outputText>
+     </h2>
+            <div align="center" style="padding:5px">              
+                <h:form>
+                    <h:panelGrid columns="4" cellpadding="5">
+                        <h:outputLabel value="用户Id：" for="UId" />
+                        <h:inputText id="UId" value="#{userController.selected.UId}" title="#{bundle.CreateUserTitle_UId}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_UId}"/>
+                        <h:outputLabel value="用户昵称：" for="UUsername" />
+                        <h:inputText id="UUsername" value="#{userController.selected.UUsername}" title="#{bundle.CreateUserTitle_UUsername}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_UUsername}"/>
+                        <h:outputLabel value="用户姓名：" for="UName" />
+                        <h:inputText id="UName" value="#{userController.selected.UName}" title="#{bundle.CreateUserTitle_UName}" />
+                        <h:outputLabel value="用户密码：" for="UPassword" />
+                        <h:inputText id="UPassword" value="#{userController.selected.UPassword}" title="#{bundle.CreateUserTitle_UPassword}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_UPassword}"/>
+                        <h:outputLabel value="GPA：" for="UGPA" />
+                        <h:inputText id="UGPA" value="#{userController.selected.UGPA}" title="#{bundle.CreateUserTitle_UGPA}" />
+                        <h:outputLabel value="Tofel：" for="UTofel" />
+                        <h:inputText id="UTofel" value="#{userController.selected.UTofel}" title="#{bundle.CreateUserTitle_UTofel}" />
+                        <h:outputLabel value="Gre：" for="UGre" />
+                        <h:inputText id="UGre" value="#{userController.selected.UGre}" title="#{bundle.CreateUserTitle_UGre}" />
+                        <h:outputLabel value="微信：" for="UWechat" />
+                        <h:inputText id="UWechat" value="#{userController.selected.UWechat}" title="#{bundle.CreateUserTitle_UWechat}" />
+                        <h:outputLabel value="邮箱：" for="UEmail" />
+                        <h:inputText id="UEmail" value="#{userController.selected.UEmail}" title="#{bundle.CreateUserTitle_UEmail}" />
+                        <h:outputLabel value="相关信息：" for="UInfo" />
+                        <h:inputTextarea rows="4" cols="30" id="UInfo" value="#{userController.selected.UInfo}" title="#{bundle.CreateUserTitle_UInfo}" />
+                        <h:outputLabel value="专业：" for="UMajor" />
+                        <h:inputText id="UMajor" value="#{userController.selected.UMajor}" title="#{bundle.CreateUserTitle_UMajor}" />
+                        <h:outputLabel value="状态：" for="UState" />
+                        <h:inputText id="UState" value="#{userController.selected.UState}" title="#{bundle.CreateUserTitle_UState}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_UState}"/>
+                        <h:outputLabel value="头像：" for="UAvatar" />
+                        <h:inputText id="UAvatar" value="#{userController.selected.UAvatar}" title="#{bundle.CreateUserTitle_UAvatar}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_UAvatar}"/>
+                        <h:outputLabel value="学校ID：" for="collegeCId" />
+                        <h:selectOneMenu id="collegeCId" value="#{userController.selected.collegeCId}" title="#{bundle.CreateUserTitle_collegeCId}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_collegeCId}">
+                            <f:selectItems value="#{collegeController.itemsAvailableSelectOne}"/>
+                        </h:selectOneMenu>
+                    </h:panelGrid>
+                    <br />
+                    <h:panelGroup id="messagePanel" layout="block">
+                        <h:messages errorStyle="color: darkcyan" infoStyle="color: darkcyan" layout="table"/>
+                    </h:panelGroup>
+                    <h:panelGrid  columns="3" cellpadding="25">
+                        <h:commandButton value="保存" action="#{userController.create}" />
+                        <h:commandButton action="#{userController.prepareList}" value="显示所有用户信息" immediate="true"/>
+                        <h:commandButton value="返回" action="/user/List" immediate="true"/>
+                        <!--将原来的报错并显示所有改为不报错直接进入list页面-->
+                    </h:panelGrid>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+
+</html>

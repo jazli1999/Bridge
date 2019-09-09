@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>User Info Page</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+    </h:head>
+
+    <style type="text/css">
+        .label {
+            width:20%;
+            padding:4px;
+        }
+
+        .value {
+            width:80%;
+            padding:4px;
+        }
+
+        .grid {
+            width:100%;
+        }
+
+        .link-text {
+            color: #d2e6f0
+        }
+
+
+        .error {
+            color: red;
+        }
+
+        .outputLabel {
+            font-weight: bold;
+        }
+
+        .grid {
+            width:33%;
+            padding:4px;
+        }
+    </style>
+
+
+    <h:body>
+        <h:form>
+            <ui:composition template="/template.xhtml">
+
+                <ui:define name="content">
+
+
+
+                    <div class="Edit">
+                        <p:growl id="growl" sticky="true" showDetail="true"/>
+
+
+                        <p:tab id="personal" title="Personal">
+                            <p:panel header="Personal Details">
+                                <p:messages />
+                                <h:panelGrid columns="2" columnClasses="label, value">
+
+
+
+                                    <h:outputLabel value="用户ID：" for="UId" />
+                                    <h:outputText id="UId" value="#{userController.UId}"  />
+
+                                    <h:outputLabel value="用户名：" for="UUsername" />
+                                    <h:outputText id="UUsername" value="#{userController.getUUsername()}" />
+
+                                    <h:outputLabel value="用户姓名：" for="UName" />
+                                    <h:outputText id="UName" value="#{userController.UName}" title="#{bundle.EditUserTitle_UName}" />
+
+
+                                    <h:outputLabel value="GPA：" for="UGPA" />
+                                    <h:inputText id="UGPA" value="#{userController.UGPA}" title="#{bundle.EditUserTitle_UGPA}" />
+
+                                    <h:outputLabel value="Tofel：" for="UTofel" />
+                                    <h:inputText id="UTofel" value="#{userController.UTofel}" title="#{bundle.EditUserTitle_UTofel}" />
+
+                                    <h:outputLabel value="Gre：" for="UGre" />
+                                    <h:inputText id="UGre" value="#{userController.UGre}" title="#{bundle.EditUserTitle_UGre}" />
+
+                                    <h:outputLabel value="微信：" for="UWechat" />
+                                    <h:inputText id="UWechat" value="#{userController.UWechat}" title="#{bundle.EditUserTitle_UWechat}" />
+
+                                    <h:outputLabel value="电子邮箱：" for="UEmail" />
+                                    <h:inputText id="UEmail" value="#{userController.UEmail}" title="#{bundle.EditUserTitle_UEmail}" />
+
+                                    <h:outputLabel value="更多信息：" for="UInfo" />
+                                    <h:inputTextarea rows="4" cols="30" id="UInfo" value="#{userController.UInfo}" title="#{bundle.EditUserTitle_UInfo}" />
+
+                                    <h:outputLabel value="专业:" for="UMajor" />
+                                    <h:inputText id="UMajor" value="#{userController.UMajor}" title="#{bundle.EditUserTitle_UMajor}" />
+
+                                    <h:outputLabel value="状态" for="UState" />
+                                    <h:inputText id="UState"  value="#{userController.u_state}" title="#{bundle.EditUserTitle_UState}" required="true" requiredMessage="状态不能为空 0--待考 1--已经录取"/>
+
+
+                                    <h:outputLabel value="#{bundle.EditUserLabel_collegeCId}" for="collegeCId" />
+                                    <h:selectOneMenu id="collegeCId" value="#{userController.collegeCId}" title="#{bundle.EditUserTitle_collegeCId}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_collegeCId}">
+                                        <f:selectItems value="#{collegeController.itemsAvailableSelectOne}"/>
+                                    </h:selectOneMenu>
+
+
+
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+                        <p:commandLink value="保存" action="#{userController.save}" class="link-text" >
+                        </p:commandLink>
+
+                    </div>
+
+
+                </ui:define>
+            </ui:composition>
+        </h:form>
+    </h:body>
+</html>

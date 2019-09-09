@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Sharing</title>
+        <h:outputStylesheet name="/resources/css/jsfcrud.css"/>
+    </h:head>
+    <h:body>
+        <h:form>
+            <ui:composition template="/template.xhtml">
+                <ui:define name="title">
+                    <h:outputText value="#{bundle.EditSharingTitle}"></h:outputText>
+                </ui:define>
+                <ui:define name="content">
+                    <style>
+                        .transparent-bg {
+                            background: transparent;
+                            background-color: rgba(0, 0, 0, 0);
+                        }
+
+                        #vertical-outliner-1 {
+                            display: flex;
+                        }
+
+                        div.block-white {
+                            background-color: rgba(256, 256, 256, 0.4); 
+                            padding-left: 0px;
+                            padding-right: 0px;
+                            padding-bottom: 20px;
+                            margin-left: 150px;
+                            margin-right: 20px;
+                            margin-top: 10px;
+                            margin-bottom: 10px;
+                            width: 300px;
+                            height: 350px;
+                            font-family: sans-serif;
+                            border-radius: 5px
+                        }
+
+                        .link-text {
+                            color: #d2e6f0
+                        }
+
+                        div.replace {
+                            border-radius: 5px
+                        }
+
+                        div.block-dark {
+                            background-color: rgba(0, 0, 0, 0.3); 
+                            padding-left: 0px;
+                            padding-right: 0px;
+                            padding-bottom: 20px;
+                            padding-top: 0px;
+                            margin-left: 20px;
+                            margin-right: 20px;
+                            margin-top: 10px;
+                            margin-bottom: 10px;
+                            text-align: left;
+                            width: 600px;
+                            font-family: sans-serif;
+                            border-radius: 5px;
+                        }
+
+                        .content-edit {
+                            background-color: rgba(256, 256, 256, 0.6);
+                            margin-top: 30px; 
+                            padding: 20px 20px 20px 20px;
+                            width: 80%; 
+                            height: 300px;
+                            font-family: sans-serif;
+                            font-size: 14pt;
+                        }
+
+                        .title-edit {
+                            text-align: center; 
+                            background-color: rgba(256, 256, 256, 0.3); 
+                            padding-bottom: 10px; 
+                            padding-top: 10px; 
+                            font-size: 24pt; 
+                            width: 90%
+                        }
+
+                        .header-bg {
+                            font-weight: bold;
+                            color: white;
+                            background-color: graytext;
+                            width: 100%;
+                            margin-top: 0px;
+                            padding-top: 5px;
+                            padding-bottom: 10px;
+                            border-radius: 5px;
+                            font-family: Chaparral Pro;
+                            box-shadow: 0 0 3px 1px #333;
+                            text-align: center
+                        }
+
+
+                    </style>
+                    <div id="vertical-outliner-1" class="replace">
+                        <div id="west" class="block-white">
+                            <div id="avatar" align="center">
+                                <h:graphicImage value="#{currentUser.curUser.UAvatar}" style="width: 150px; padding-top: 50px"  />
+                                <p />
+                                <h:outputText value="#{currentUser.curUser.UUsername}" />
+                            </div>
+                        </div>
+                        <div id="passage" class="block-dark">
+                            <div id="title" class="header-bg">
+                                <h:inputText id="STitle" value="#{sharingController.selected.STitle}" class="title-edit" title="#{bundle.EditSharingTitle_STitle}" required="true" requiredMessage="标题不能为空"/>        
+                                <p />
+                                <h:inputText value="#{sharingController.selected.SDate}" disabled="true" title="#{bundle.ViewSharingTitle_SDate}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:inputText>
+                            </div>
+                            <div id="content" align="center">
+                                <h:inputTextarea rows="4" cols="30" id="SContent" value="#{sharingController.selected.SContent}" class="content-edit" title="#{bundle.EditSharingTitle_SContent}" required="true" requiredMessage="内容不能为空" />
+                                <p />
+                                <h:panelGroup id="messagePanel" layout="block">
+                                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table" />
+                                </h:panelGroup>
+                                <h:commandLink action="#{sharingController.create}"  value="#{bundle.EditSharingSaveLink}" class="link-text" />
+                                <h:commandLink action="/sharing/List.xhtml" value="Cancel" immediate="true" class="link-text" style="margin-left: 30px"/>
+                            </div>
+                        </div>
+                    </div>
+                </ui:define>
+            </ui:composition>
+        </h:form>
+    </h:body>
+</html>

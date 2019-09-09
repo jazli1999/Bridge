@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <title>#{collegeInfo.name_en}</title>
+    </h:head>
+
+    <h:body>
+        <h:form>
+            <ui:composition template="/template.xhtml">
+                <ui:define name="content" class="transparent-bg">
+                    <style>
+                        .transparent-bg {
+                            background: transparent;
+                            background-color: rgba(0, 0, 0, 0);
+                        }
+
+                        #vertical-outliner-1 {
+                            display: flex;
+                        }
+
+                        div.block-white {
+                            background-color: rgba(256, 256, 256, 0.4); 
+                            padding-left: 0px;
+                            padding-right: 0px;
+                            padding-bottom: 20px;
+                            margin-left: 70px;
+                            margin-right: 20px;
+                            margin-top: 10px;
+                            margin-bottom: 10px;
+                            width: 400px;
+                            font-family: sans-serif;
+                            border-radius: 5px
+                        }
+
+                        .link-text {
+                            color: #d2e6f0
+                        }
+
+                        div.replace {
+                            border-radius: 5px
+                        }
+
+                        div.block-dark {
+                            background-color: rgba(0, 0, 0, 0.3); 
+                            padding-left: 0px;
+                            padding-right: 0px;
+                            padding-bottom: 20px;
+                            padding-top: 0px;
+                            margin-left: 20px;
+                            margin-right: 20px;
+                            margin-top: 10px;
+                            margin-bottom: 10px;
+                            text-align: left;
+                            width: 600px;
+                            font-family: sans-serif;
+                            border-radius: 5px;
+                        }
+
+                        .header-bg {
+                            font-size: 18pt;
+                            font-weight: bold;
+                            color: white;
+                            background-color: rgba(78, 106, 113, 0.7);
+                            width: 100%;
+                            margin-top: 0px;
+                            padding-top: 10px;
+                            padding-bottom: 10px;
+                            border-radius: 5px;
+                            font-family: Chaparral Pro;
+                            box-shadow: 0 0 3px 1px #333;
+                            text-align: center
+                        }
+
+                    </style>
+                    <div id="horizontal-outliner-1" class="replace">
+                        <div id="college-name">
+                            <h1 align="center" style="font-size: 24pt; margin-bottom: 0px" class="transparent-bg"> #{collegeInfo.name_ch} </h1>
+                            <h2 align="center" style="font-size: 16pt; margin-top: 3px; margin-bottom: 0px" class="transparent-bg"> #{collegeInfo.name_en} </h2>
+                        </div>
+                        <div id="vertical-outliner-1" class="replace">
+                            <div id="horizontal-outliner-2-1" class="replace">
+                                <div id="badge" class="block-white" align="center">
+                                    <h2 class="header-bg">School Badge</h2>
+                                    <div>
+                                        <h:graphicImage value="#{collegeInfo.pic}" width="180" />
+                                    </div>
+                                    <div>
+                                        <h:commandButton value="Bookmark #{collegeInfo.name_en}" action="#{userCollege.userStarsCollege}" rendered="#{!collegeInfo.isBookmarked}">
+                                            <f:param name="cur_user_id" value="#{currentUser.userId}" />
+                                            <f:param name="cur_college_id" value="#{collegeInfo.id}" />
+                                        </h:commandButton>
+                                        <h:commandButton value="Unbookmarked #{collegeInfo.name_en}" action="#{userCollege.userUnstarsCollege}" rendered="#{collegeInfo.isBookmarked}">
+                                            <f:param name="cur_user_id" value="#{currentUser.userId}" />
+                                            <f:param name="cur_college_id" value="#{collegeInfo.id}" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                                <div id="star" class="block-white" align="center">
+                                    <h2 class="header-bg">People Who Are Also Interested</h2>
+                                    <f:metadata>
+                                        <f:viewAction action="#{collegeInfo.refreshStars}">
+                                            <f:viewParam name="college_id" value="#{collegeInfo.id}" />
+                                        </f:viewAction>
+                                    </f:metadata>
+                                    <c:forEach items="#{collegeInfo.stars}" var="user">
+                                        <div class="transparent-bg replace">
+                                            <h:graphicImage width="30px" value="#{user.getUAvatar()}" />
+                                            <h:commandLink value="#{user.getUUsername()}" class="link-text" action="#{userController.getUserInfoPage}">
+                                                <f:param name="user_id" value="#{user.getUId()}" />
+                                            </h:commandLink>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                            <div id="horizontal-outliner-2-2" class="replace">
+                                <div id="intro" class="block-dark">
+                                    <h2 class="header-bg">Brife Introduction</h2>
+                                    <p style="margin-left: 40px; margin-right:40px">#{collegeInfo.info}</p>
+                                </div>
+                                <div id="require" class="block-dark">
+                                    <h2 class="header-bg">Requirements</h2>
+                                    <div style="margin-left: 60px">
+                                        <h:panelGrid id="detailsTable" columns="2" styleClass="transparent-bg">
+                                            <h:outputLabel value="Country:" />
+                                            <h:outputText value="#{collegeInfo.country}" />
+                                            <h:outputLabel value="Site:" />
+                                            <h:outputLink value="http://#{collegeInfo.site}" class="link-text" > #{collegeInfo.name_en} </h:outputLink>
+
+                                            <h:outputLabel value="GPA: " />
+                                            <h:outputText value="#{collegeInfo.gpa}" rendered="#{collegeInfo.gpa != 0}" />
+                                            <h:outputText value="currently not available" rendered="#{collegeInfo.gpa == 0}" />
+                                            <h:outputLabel value="GRE: " />
+                                            <h:outputText value="#{collegeInfo.gre}" rendered="#{collegeInfo.gre != 0}" />
+                                            <h:outputText value="currently not available" rendered="#{collegeInfo.gre == 0}" />
+                                            <h:outputLabel value="TOFEL: " />
+                                            <h:outputText value="#{collegeInfo.tofel}" rendered="#{collegeInfo.tofel != 0}" />
+                                            <h:outputText value="currently not available" rendered="#{collegeInfo.tofel == 0}" />
+                                            <h:outputLabel value="Fee: " />
+                                            <h:outputText value="$ #{collegeInfo.fee}" rendered="#{collegeInfo.fee != 0}" />
+                                            <h:outputText value="currently not available" rendered="#{collegeInfo.fee == 0}" />
+                                        </h:panelGrid>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ui:define>
+            </ui:composition>
+        </h:form>
+    </h:body>
+</html>

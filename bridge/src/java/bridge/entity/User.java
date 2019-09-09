@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -19,6 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -44,7 +47,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "User.findByUWechat", query = "SELECT u FROM User u WHERE u.uWechat = :uWechat")
     , @NamedQuery(name = "User.findByUEmail", query = "SELECT u FROM User u WHERE u.uEmail = :uEmail")
     , @NamedQuery(name = "User.findByUMajor", query = "SELECT u FROM User u WHERE u.uMajor = :uMajor")
-    , @NamedQuery(name = "User.findByUState", query = "SELECT u FROM User u WHERE u.uState = :uState")})
+    , @NamedQuery(name = "User.findByUState", query = "SELECT u FROM User u WHERE u.uState = :uState")
+    , @NamedQuery(name = "User.findByUAvatar", query = "SELECT u FROM User u WHERE u.uAvatar = :uAvatar")
+    , @NamedQuery(name = "User.findAllStarred", query = "SELECT c FROM User u JOIN u.collegeCollection c WHERE u.uId = :uId")
+    , @NamedQuery(name = "User.findBySearch", query = "SELECT u FROM User u WHERE u.uUsername LIKE :keyWord or u.uName LIKE :keyWord")
+    , @NamedQuery(name = "User.findMaxId", query = "SELECT MAX(u.uId) FROM User u")
+})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -91,9 +99,9 @@ public class User implements Serializable {
     private int uState;
     @Basic(optional = false)
     @NotNull
-    @Lob
+    @Size(min = 1, max = 255)
     @Column(name = "u_avatar")
-    private byte[] uAvatar;
+    private String uAvatar;
     @ManyToMany(mappedBy = "userCollection")
     private Collection<College> collegeCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userUId")
@@ -109,7 +117,7 @@ public class User implements Serializable {
         this.uId = uId;
     }
 
-    public User(Integer uId, String uUsername, String uPassword, int uState, byte[] uAvatar) {
+    public User(Integer uId, String uUsername, String uPassword, int uState, String uAvatar) {
         this.uId = uId;
         this.uUsername = uUsername;
         this.uPassword = uPassword;
@@ -213,11 +221,11 @@ public class User implements Serializable {
         this.uState = uState;
     }
 
-    public byte[] getUAvatar() {
+    public String getUAvatar() {
         return uAvatar;
     }
 
-    public void setUAvatar(byte[] uAvatar) {
+    public void setUAvatar(String uAvatar) {
         this.uAvatar = uAvatar;
     }
 
@@ -271,5 +279,5 @@ public class User implements Serializable {
     public String toString() {
         return "bridge.entity.User[ uId=" + uId + " ]";
     }
-    
+
 }

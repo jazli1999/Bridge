@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"  
+      xmlns:p="http://primefaces.org/ui"
+
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Bridge管理员系统</title>
+        <h:outputStylesheet library="css" name="ad-style.css"/>
+    </h:head>
+    <h:body>
+        <style>
+
+            div.father{
+                background-image: url(bridge.png); 
+                background-repeat:no-repeat;
+                background-size:cover;
+                position: fixed;
+                width:100%;
+                height:100%;
+                opacity: 1;
+                overflow: auto;
+                left:0;
+                top:0;
+
+            }
+            div.background{
+                width: 80%;
+                height: 150%;
+                background: rgba(0, 0, 0, 0.5);
+                margin-top: 10px;
+                border-radius: 5px;
+                color:white;
+                font-family: Chaparral Pro,"微软雅黑";
+
+
+            }
+            div.title{
+                width: 100%;
+                height: 100px;
+                background: rgba(0, 0, 0, 0.5);
+                border-top-right-radius: 5px;
+                border-top-left-radius: 5px;
+                padding-left: 0;
+
+            }
+
+            .logo{
+                font-size: 35pt;
+                font-family: Chaparral Pro;
+                letter-spacing:5px;
+                color: white;
+                padding-left:500px;
+
+            }
+            #title{
+                font-size:13pt;
+                color: white;
+                padding-left: 450px;
+            }
+            div.log{                 
+                width:800px;
+                height: auto;
+                opacity:1;
+                padding-top: 25px;
+                padding-left:300px;
+
+
+            }
+        </style>
+
+
+        <div class="father" align="center" >
+
+            <h:form>
+                <h:commandButton value="查看更改大学信息" action="/college_ad/List" styleClass="ad_button1"/>
+                <h:commandButton value="查看更改文章信息" action="/sharing_ad/List" styleClass="ad_button2"/>
+                <h:commandButton value="查看更改用户信息" action="/user_ad/List" styleClass="ad_button3"/>
+
+            </h:form>  
+            <div class="background" align="center">
+                <div class="title" align="left">
+                    <h:panelGrid columns="2" cellpadding="0">
+                        <h:outputText styleClass="logo" value="BRIDGE" />
+                        <b><h:outputText id="title" value="北邮留学服务及信息咨询管理平台"/></b>
+                    </h:panelGrid> 
+                    <div align="center"  class="log">
+                        <ui:insert name="content">Content</ui:insert>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>

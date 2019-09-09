@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Sharing</title>
+        <h:outputStylesheet name="/resources/css/jsfcrud.css"/>
+    </h:head>
+    <h:body>
+        <h:form>
+            <ui:composition template="/template.xhtml">
+                <ui:define name="content">
+                    <style>
+                        .row-1 {
+                            background-color: rgba(150 ,150,150, 1);
+                            text-align: center;
+                            color: #eeeeee;
+                            font-size: 14pt;
+                            font-family: sans-serif;
+                            border-radius: 5px
+                        }
+
+                        .row-2 {
+                            background-color: rgba(200, 200, 200, 1);
+                            text-align: center;
+                            color: #303950;
+                            font-size: 14pt;
+                            font-family: sans-serif;
+                            border-radius: 5px
+                        }
+
+                        .link-text {
+                            color: #066A75;
+                            text-decoration: none;
+                        }
+
+                        .tool {
+                            color: #d2e6f0;
+                            text-decoration: none;
+                            font-size: 13pt;
+                            font-family: sans-serif;
+                        }
+
+                        table.table {
+                            background-color: rgba(256, 256, 256, 0.3);
+                            padding-left: 60px;
+                            padding-right: 60px;
+                            padding-bottom: 20px;
+                            border-radius: 5px
+                        }
+
+                        .table-header {
+                            font-size: 18pt;
+                            font-family: sans-serif;
+                            text-align: center
+                        }
+
+                        .header-bg {
+                            font-size: 24pt;
+                            font-weight: bold;
+                            color: white;
+                            position: relative;
+                            top: -20px;
+                            background-color: rgba(78, 106, 113, 0.7);
+                            width: 100%;
+                            margin-top: 0px;
+                            padding-top: 20px;
+                            padding-bottom: 20px;
+                            border-radius: 5px;
+                            font-family: sans-serif;
+                            box-shadow: 0 0 3px 1px #333;
+                            text-align: center
+                        }
+                    </style>
+                    <div class="header-bg">
+                        全部分享
+                    </div>
+                    <div style="width: 90%;" align="left">
+                        <h:panelGrid columns="4" width="400px" style="margin-left: 800px">
+                            <h:commandLink action="#{sharingController.prepareCreate}" value="发表分享"  class="tool"/>
+                            <h:commandLink value="按日期排序" action="#{sharingController.sortItems(0)}" class="tool" />
+                            <h:commandLink value="按点赞排序" action="#{sharingController.sortItems(1)}" class="tool"/>
+                        </h:panelGrid>
+                    </div>
+                    <div color="white" align="center">
+                        <h:outputText escape="false" value="#{bundle.ListSharingEmpty}" rendered="#{sharingController.items.rowCount == 0}"/>
+                        <h:panelGroup rendered="#{sharingController.items.rowCount > 0}">
+                            <h:commandLink action="#{sharingController.previous}" class="link-text" value="#{bundle.Previous} #{sharingController.pagination.pageSize}" rendered="#{sharingController.pagination.hasPreviousPage}"/>&nbsp;
+                            <h:commandLink action="#{sharingController.next}" class="link-text" value="#{bundle.Next} #{sharingController.pagination.pageSize}" rendered="#{sharingController.pagination.hasNextPage}"/>&nbsp;
+                            <h:dataTable value="#{sharingController.items}" var="item" styleClass="table" width="80%" rowClasses="row-1, row-2">
+
+                                <h:column>
+                                    <f:facet name = "header"><h2 class="table-header">标题</h2></f:facet> 
+                                    <h:commandLink action="#{sharingController.prepareView}" value="#{item.STitle}" class="link-text"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name = "header"><h2  class="table-header">发布者 </h2></f:facet> 
+                                    <h:outputText value="#{item.userUId.getUUsername()}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name = "header" class="table-header"><h2 class="table-header">发布时间</h2></f:facet> 
+                                    <h:outputText value="#{item.SDate}">
+                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                    </h:outputText>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name = "header"> <h2 class="table-header">点赞</h2></f:facet> 
+                                    <h:outputText value="#{item.SUp}"/>
+                                </h:column>
+                            </h:dataTable>
+
+                        </h:panelGroup>
+                    </div>
+                </ui:define>
+            </ui:composition>
+        </h:form>
+    </h:body>
+</html>

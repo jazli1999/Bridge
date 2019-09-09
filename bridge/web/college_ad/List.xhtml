@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/templateAdmin.xhtml">
+        <ui:define name="content">
+            <h2> 
+                <h:outputText value="College List"></h:outputText>
+            </h2>
+            <h:form>
+                Search :
+                <h:inputText value="#{collegeFacade.keyword}" style="width: 120px; text-align: right" /><h:commandButton value="Submit" action="#{collegeController.getItemsByCollegeSearch}" style="margin-left: 10px" />
+            </h:form>
+            <h:form style="padding-top: 20px">
+                <h:outputText escape="false" value="大学信息为空" rendered="#{collegeController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{collegeController.items.rowCount > 0}">
+                    <h:dataTable  value="#{collegeController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px" columnClasses="list-column1-center">
+                        <h:column >
+                            <f:facet name="header">
+                                <h:outputText value="ID"/>
+                            </f:facet>
+                            <h:outputText value="#{item.CId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="名称-中文"/>
+                            </f:facet>
+                            <h:outputText value="#{item.CNameCh}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="名称-英文"/>
+                            </f:facet>
+                            <h:outputText value="#{item.CNameEn}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="国家"/>
+                            </f:facet>
+                            <h:outputText value="#{item.CCountry}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="网址"/>
+                            </f:facet>
+                            <h:outputText value="#{item.CSite}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{collegeController.prepareView}" value="查看"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{collegeController.prepareEdit}" value="修改"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink value="删除"  action="#{collegeController.destroy}" onclick="if (!confirm('确定删除？'))
+                                        return false;"/>
+                        </h:column>
+                    </h:dataTable>
+                    <h:form ><h:commandLink action="#{collegeController.previous}" value="#{bundle.Previous} #{collegeController.pagination.pageSize}" rendered="#{collegeController.pagination.hasPreviousPage}"/>&nbsp;</h:form >
+                    <h:form ><h:commandLink action="#{collegeController.next}" value="#{bundle.Next} #{collegeController.pagination.pageSize}" rendered="#{collegeController.pagination.hasNextPage}"/>&nbsp;</h:form >
+                </h:panelGroup>
+
+                <h:panelGroup id="messagePanel" layout="block"><h:form>
+                        <h:messages errorStyle="color: darkcyan" infoStyle="color: darkcyan" layout="table"/></h:form>
+                </h:panelGroup>
+            </h:form>
+            <div id="button" align="center" >
+                <h:panelGrid columns="2" cellpadding="15">
+                    <h:form >  <h:commandButton  value="返回" action="#{collegeController.refresh()}"/></h:form>
+                    <h:form >   <h:commandButton  value="添加大学信息" action="/college_ad/Create" /></h:form>
+                </h:panelGrid>
+            </div>
+        </ui:define>
+    </ui:composition>
+
+</html>
